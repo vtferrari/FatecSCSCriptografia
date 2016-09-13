@@ -1,0 +1,13 @@
+{
+  "name": "Criptografia",
+  "version": "1.0.0",
+  "main": "path/to/main.css",
+  "ignore": [
+    ".jshintrc",
+    "**/*.txt"
+  ],
+  "dependencies": {
+    "jQuery": "3.1.0"
+  },
+  "devDependencies": {}
+}
