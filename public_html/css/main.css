@@ -3,10 +3,39 @@
 /* ==========================================================================
    Author's custom styles
    ========================================================================== */
+header {  
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-position: center; 
+    height: 330px;
+    margin-bottom: 10px;
+}
 
+header.escrituras-sagradas{
+    background-image: url("../img/bíblia.jpg");
 
+}
+header.imperio-romano{
+    background-image: url("../img/roma.jpg");
+    background-size: auto 1400px;
+}
+header.cifra-vigenere{
+    background-image: url("../img/vigenere.jpg");
+    background-size: auto 1400px;
+}
 
-
+header .titulo{
+    height: 330px;
+}
+header .titulo h1{
+    line-height: 330px;
+    text-align: center;
+    color: #FFF;
+    font-family: Arial;
+    font-size: 80px;
+    text-shadow: 2px 2px 2px #000;
+    margin: 0;
+}
 
 
 

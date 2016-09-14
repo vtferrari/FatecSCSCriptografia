@@ -57,28 +57,22 @@
             </div>
         </nav>
 
-        <header class="imperio-romano">
-            <div class="titulo"><h1>Imperio Romano</h1></div>
+        <header class="escrituras-sagradas">
+            <div class="titulo"><h1>Escrituras Sagradas</h1></div>
         </header>
-
         <div class="container">
             <div class="row">
-                <div class="form-group col-sm-9">
+                <div class="form-group">
                     <label>Mensagem</label>
                     <input type="text" id="mensagem" class="form-control" />
                 </div>
-                <div class="form-group col-sm-3">
-                    <label>Chave</label>
-                    <input type="number" value="3"  id="chave" class="form-control" />
-                </div>
-                <div class="form-group col-sm-12">
+                <div class="form-group">
                     <label>Mensagem Cifrada/Decifrada</label>
                     <input type="text" id="cifra" class="form-control" disabled/>
                 </div>
-                <div class="form-group col-sm-12">
-                    <button type="submit" id="cripto" class="btn btn-success">Criptografar</button>
-                    <button type="submit" id="decripto" class="btn btn-danger">Decriptografar</button>
-                </div>
+                <button type="submit" id="atbash" class="btn btn-default">Cifra de Atbash</button>
+                <button type="submit" id="albam" class="btn btn-default">Cifra de Albam</button>
+                <button type="submit" id="atbah" class="btn btn-default">Cifra de Albam</button>
             </div>
             <hr>
 
@@ -96,26 +90,28 @@
                 $("#mensagem").val($("#mensagem").val().toUpperCase());
                 mensagem = $("#mensagem").val().toUpperCase();
             });
-            $("#chave").on("keyup", function () {
-                chave = parseInt($("#chave").val());
+            $("#atbash").on("click", function () {
+                var tabela = ['Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S', 'R', 'Q', 'P', 'O', 'N', 'M', 'L', 'K', 'J', 'I', 'H', 'G', 'F', 'E', 'D', 'C', 'B', 'A'];
+                $("#cifra").val(escriturasSagradas(mensagem, tabela));
             });
-            $("#cripto").on("click", function () {
-                $("#cifra").val(cifraDeCesar(mensagem, chave));
+            $("#albam").on("click", function () {
+                var tabela = ['N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z', 'A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'Z'];
+                $("#cifra").val(escriturasSagradas(mensagem, tabela));
             });
-            $("#decripto").on("click", function () {
-                $("#cifra").val(cifraDeCesar(mensagem, chave * -1));
+            $("#atbah").on("click", function () {
+                var tabela = ['I', 'H', 'G', 'F', 'N', 'D', 'C', 'B', 'A', 'R', 'Q', 'P', 'O', 'E', 'M', 'L', 'K', 'J', 'Z', 'Y', 'X', 'W', 'V', 'U', 'T', 'S'];
+                $("#cifra").val(escriturasSagradas(mensagem, tabela));
             });
 
-            function cifraDeCesar(mensagem, chave) {
+            function escriturasSagradas(mensagem, tabela) {
+                var alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
                 var cifra = "";
-                for (i = 0; i < mensagem.length; i++) {
-                    var letra = mensagem.charCodeAt(i) + chave;
-                    if (letra > 90) {
-                        letra -= 26;
-                    } else if (letra < 65) {
-                        letra += 26;
-                    }
-                    cifra += String.fromCharCode(letra);
+                for (var i = 0; i < mensagem.length; i++) {
+                    alfabeto.forEach(function (item, index) {
+                        if (mensagem.charAt(i).toUpperCase() === tabela[index].toUpperCase()) {
+                            cifra += item;
+                        }
+                    });
                 }
                 return cifra;
             }

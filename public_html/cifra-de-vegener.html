@@ -57,28 +57,25 @@
             </div>
         </nav>
 
-        <header class="imperio-romano">
-            <div class="titulo"><h1>Imperio Romano</h1></div>
+        <header class="cifra-vigenere">
+            <div class="titulo"><h1>A cifra de Vigenère</h1></div>
         </header>
-
         <div class="container">
             <div class="row">
-                <div class="form-group col-sm-9">
+                <div class="form-group">
                     <label>Mensagem</label>
                     <input type="text" id="mensagem" class="form-control" />
                 </div>
-                <div class="form-group col-sm-3">
+                <div class="form-group">
                     <label>Chave</label>
-                    <input type="number" value="3"  id="chave" class="form-control" />
+                    <input type="text" id="chave" class="form-control" />
                 </div>
-                <div class="form-group col-sm-12">
+                <div class="form-group">
                     <label>Mensagem Cifrada/Decifrada</label>
                     <input type="text" id="cifra" class="form-control" disabled/>
                 </div>
-                <div class="form-group col-sm-12">
-                    <button type="submit" id="cripto" class="btn btn-success">Criptografar</button>
-                    <button type="submit" id="decripto" class="btn btn-danger">Decriptografar</button>
-                </div>
+                <button type="submit" id="cripto" class="btn btn-success">Criptografar</button>
+                <button type="submit" id="decripto" class="btn btn-danger">Decriptografar</button>
             </div>
             <hr>
 
@@ -91,33 +88,85 @@
         <script src="js/main.js"></script>
         <script type="text/javascript" >
             var mensagem = "";
-            var chave = 3;
+            var chave = "";
             $("#mensagem").on("keyup", function () {
                 $("#mensagem").val($("#mensagem").val().toUpperCase());
                 mensagem = $("#mensagem").val().toUpperCase();
             });
             $("#chave").on("keyup", function () {
-                chave = parseInt($("#chave").val());
+                $("#chave").val($("#chave").val().toUpperCase());
+                chave = $("#chave").val().toUpperCase();
             });
             $("#cripto").on("click", function () {
-                $("#cifra").val(cifraDeCesar(mensagem, chave));
+                $("#cifra").val(cifraDeVigenere(mensagem, chave));
             });
             $("#decripto").on("click", function () {
-                $("#cifra").val(cifraDeCesar(mensagem, chave * -1));
+                $("#cifra").val(decifraDeVigenere(mensagem, chave));
             });
-
-            function cifraDeCesar(mensagem, chave) {
+            function cifraDeVigenere(mensagem, chave) {
                 var cifra = "";
-                for (i = 0; i < mensagem.length; i++) {
-                    var letra = mensagem.charCodeAt(i) + chave;
-                    if (letra > 90) {
-                        letra -= 26;
-                    } else if (letra < 65) {
-                        letra += 26;
-                    }
-                    cifra += String.fromCharCode(letra);
+                var cifrado = new Array();
+                var x, y;
+                for (var i = 0; i < mensagem.length; i++) {
+                    x = pegaPosicao(mensagem.charAt(i));
+                    y = pegaPosicao(pegaLetra(chave, i));
+                    cifrado[i] = tabelaDeVigenere()[x][y];
                 }
-                return cifra;
+                cifrado.forEach(function (item) {
+                    cifra += item;
+                });
+                return  cifra;
+            }
+            function decifraDeVigenere(mensagem, chave) {
+                var cifra = "";
+                var decifrado = new Array();
+                var y = 0;
+                for (var i = 0; i < mensagem.length; i++) {
+                    y = pegaPosicao(pegaLetra(chave, i));
+                    var coluna = new Array();
+                    for (var j = 0; j < 26; j++) {
+                        coluna[j] = tabelaDeVigenere()[j][y];
+                    }
+                    var a = 0;
+                    var teste = false;
+                    do {
+                        if (coluna[a].toUpperCase() === mensagem.charAt(i).toUpperCase()) {
+                            break;
+                        }
+                        a++;
+                    } while (teste === false);
+                    decifrado[i] = tabelaDeVigenere()[a][0];
+                }
+
+                for (var i = 0; i < decifrado.length; i++) {
+                    cifra += decifrado[i];
+                }
+                return  cifra;
+            }
+            function pegaLetra(chave, index) {
+                return chave[index % chave.length].toUpperCase();
+            }
+            function pegaPosicao(letra) {
+                var alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                for (var i = 0; i < alfabeto.length; i++) {
+                    if (letra.toUpperCase() === alfabeto[i].toUpperCase()) {
+                        return i;
+                    }
+                }
+            }
+            function tabelaDeVigenere() {
+                var alfabeto = ['A', 'B', 'C', 'D', 'E', 'F', 'G', 'H', 'I', 'J', 'K', 'L', 'M', 'N', 'O', 'P', 'Q', 'R', 'S', 'T', 'U', 'V', 'W', 'X', 'Y', 'Z'];
+                var tabela = [];
+                for (var i = 0; i < alfabeto.length; i++) {
+                    tabela[i] = [];
+                }
+                for (var i = 0; i < alfabeto.length; i++) {
+                    alfabeto.forEach(function (item, index) {
+                        tabela[i][index] = item;
+                    });
+                    alfabeto.push(alfabeto.shift());
+                }
+                return tabela;
             }
         </script>
 
