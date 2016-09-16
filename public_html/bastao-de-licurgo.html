@@ -46,8 +46,8 @@
                         <input type="text" id="mensagem" class="form-control" />
                     </div>
                     <div class="form-group col-sm-3">
-                        <label>Chave</label>
-                        <input type="number" value="3"  id="chave" class="form-control" />
+                        <label>Linhas</label>
+                        <input type="linhas" value="3"  id="chave" class="form-control" />
                     </div>
                     <div class="form-group col-sm-12">
                         <label>Mensagem Cifrada/Decifrada</label>
@@ -68,45 +68,46 @@
         <script src="js/main.js"></script>
         <script type="text/javascript" >
             var mensagem = "";
-            var chave = 3;
+            var linhas = 4;
             $("#mensagem").on("keyup", function () {
                 $("#mensagem").val($("#mensagem").val().toUpperCase());
                 mensagem = $("#mensagem").val().toUpperCase();
             });
-            $("#chave").on("keyup", function () {
-                chave = parseInt($("#chave").val());
+            $("#linhas").on("keyup", function () {
+                linhas = parseInt($("#linhas").val());
             });
             $("#cripto").on("click", function () {
-                $("#cifra").val(criptografiaDiscoDeAlberti(mensagem, chave));
+                $("#cifra").val(criptografiaBastaoDeLicurgo(mensagem, linhas));
             });
             $("#decripto").on("click", function () {
-                $("#cifra").val(descriptografiaDiscoDeAlberti(mensagem, chave));
+                $("#cifra").val(decriptografiaBastaoDeLicurgo(mensagem, linhas));
             });
-
-            function criptografiaDiscoDeAlberti(mensagem, chave) {
+            function criptografiaBastaoDeLicurgo(mensagem, linhas) {
                 var cifra = "";
-                var tabela = ['c', '#', 'b', 'm', 'd', 'g', 'p', 'f', 'z', 'n', 'x', 'y', 'v', 't', 'o', 's', 'k', 'e', 'r', 'l', 'h', 'a', 'i', 'q'];
-                var alfabeto = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'v', 'x', 'z', '1', '2', '3', '4'];
-                for (var i = 0; i < mensagem.length; i++) {
-                    for (var j = 0; j < alfabeto.length; j++) {
-                        if (mensagem.charAt(i).toUpperCase() === alfabeto[j].toUpperCase()) {
-                            var posicao = j + chave;
-                            cifra += tabela[posicao];
-                        }
+                mensagem = mensagem.replace(new RegExp(/ /, 'g'), '');
+                var tamanho = mensagem.length;
+                var colunas = tamanho / linhas;
+                if (tamanho % linhas > 0) {
+                    colunas += 1;
+                }
+                while (mensagem.length < linhas * colunas) {
+                    mensagem += "X";
+                }
+                colunas = parseInt(colunas);
+
+                for (var i = 0; i < colunas; i++) {
+                    for (var j = 0; j < tamanho; j = j + colunas) {
+                        cifra += mensagem[i + j];
                     }
                 }
                 return cifra;
             }
-            function descriptografiaDiscoDeAlberti(mensagem, chave) {
+            function decriptografiaBastaoDeLicurgo(mensagem, linhas) {
                 var cifra = "";
-                var tabela =   ['c', '#', 'b', 'm', 'd', 'g', 'p', 'f', 'z', 'n', 'x', 'y', 'v', 't', 'o', 's', 'k', 'e', 'r', 'l', 'h', 'a', 'i', 'q'];
-                var alfabeto = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'v', 'x', 'z', '1', '2', '3', '4'];
-                for (var i = 0; i < mensagem.length; i++) {
-                    for (var j = 0; j < tabela.length; j++) {
-                        if (mensagem.charAt(i).toUpperCase() === tabela[j].toUpperCase()) {
-                            var posicao = j - chave;
-                            cifra += alfabeto[posicao];
-                        }
+                mensagem = mensagem.replace(' ', '');
+                for (var i = 0; i < linhas; i++) {
+                    for (var j = 0; j < mensagem.length; j += linhas) {
+                        cifra += mensagem[i + j];
                     }
                 }
                 return cifra;

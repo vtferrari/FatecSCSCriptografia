@@ -41,20 +41,16 @@
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
-                    <div class="form-group col-sm-9">
+                    <div class="form-group">
                         <label>Mensagem</label>
                         <input type="text" id="mensagem" class="form-control" />
                     </div>
-                    <div class="form-group col-sm-3">
-                        <label>Chave</label>
-                        <input type="text" value="3"  id="chave" class="form-control" />
+                    <button type="submit" id="analisar" class="btn btn-danger">Decriptografar</button>
+                </div>
+                <div class="col-sm-12">
+                    <div class="histograma">
+
                     </div>
-                    <div class="form-group">
-                        <label>Mensagem Cifrada/Decifrada</label>
-                        <input type="text" id="cifra" class="form-control" disabled/>
-                    </div>
-                    <button type="submit" id="cripto" class="btn btn-success">Criptografar</button>
-                    <button type="submit" id="decripto" class="btn btn-danger">Decriptografar</button>
                 </div>
             </div>
             <hr>
@@ -68,63 +64,62 @@
         <script src="js/main.js"></script>
         <script type="text/javascript" >
             var mensagem = "";
-            var chave = 3;
             $("#mensagem").on("keyup", function () {
                 $("#mensagem").val($("#mensagem").val().toUpperCase());
                 mensagem = $("#mensagem").val().toUpperCase();
             });
-            $("#chave").on("keyup", function () {
-                chave = parseInt($("#chave").val());
-            });
-            $("#cripto").on("click", function () {
-                $("#cifra").val(discoDeAlberti(mensagem, chave));
-            });
-            $("#decripto").on("click", function () {
-                $("#cifra").val(discoDeAlberti(mensagem, chave * -1));
+            $("#analisar").on("click", function () {
+                discoDeAlberti(mensagem);
             });
 
-            function discoDeAlberti(mensagem, chave) {
-                var palavra = "KJWEHJRKWHEKRJHWEJKRHWKJEHFBSMJDHJKGDNFHJ";
+            function discoDeAlberti(mensagem) {
                 var letras = ["A", "B", "C", "D", "E", "F", "G", "H", "I", "J", "K", "L", "M", "N", "O", "P", "Q", "R", "S", "T", "U", "V", "W", "Y", "X", "Z"];
-                var demoP = document.getElementById("demo")
-
-
-
-                letras.forEach(function (item, index) {
-                    letras[item] = 0
+                letras.forEach(function (item) {
+                    letras[item] = 0;
                 });
-                letras.forEach(function (item, index) {
-                    console.log(item)
-                    for (i = 0; i < palavra.length; i++) {
-
-                        if (palavra.charAt(i) == item) {
-                            letras[item] = letras[item] + 1
+                letras.forEach(function (item) {
+                    for (var i = 0; i < mensagem.length; i++) {
+                        if (mensagem.charAt(i) === item) {
+                            letras[item] = letras[item] + 1;
                         }
                     }
-                })
-                letras.forEach(function (item, index) {
-                    demoP.innerHTML = demoP.innerHTML + "" + item + ":" + letras[item] + " | f(f-1)" + (letras[item] * (letras[item] - 1)) + "<br />";
                 });
 
 
+                var ki = 0.0781
+                var ene = mensagem.length;
+                var fr = 0.0385 * mensagem.length * (mensagem.length - 1)
+                var fi = 0.0781 * mensagem.length * (mensagem.length - 1)
 
-                var ene = document.getElementById("ene")
-                var ki = document.getElementById("k_i")
-                var fr = document.getElementById("f_r")
-                var fi = document.getElementById("f_i")
-                var phi_c = document.getElementById("phi_c")
+                var html = "";
 
-                ki.innerHTML = 0.0781
-                ene.innerHTML = palavra.length;
-                fr.innerHTML = 0.0385 * palavra.length * (palavra.length - 1)
-                fi.innerHTML = 0.0781 * palavra.length * (palavra.length - 1)
+                letras.forEach(function (item, index) {
+                    html +=
+                            '<div class="col-sm-12">' +
+                            '<div class="col-sm-2">' +
+                            '<strong> ' + item + ' => ' + letras[item] + ' </strong> ' +
+                            '</div>' +
+                            '<div class="col-sm-10">' +
+                            '<div class="progress">' +
+                            '<label>' + letras[item] * (letras[item] - 1) + '</label>' +
+                            '<div class="progress-bar progress-bar-success progress-bar-striped" role="progressbar" aria-valuenow="40" aria-valuemin="0" aria-valuemax="100" style="width: 40%">' +
+                            '<span class="sr-only">40% Complete (success)</span>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>' +
+                            '</div>';
+                });
+                $(".histograma").html(html);
+
+
+
 
                 var phi = 0;
-                letras.forEach(function (item, index) {
+                letras.forEach(function (item) {
                     phi += (letras[item] * (letras[item] - 1));
                 });
+                var phi_c = phi;
 
-                phi_c.innerHTML = phi;
             }
         </script>
 
