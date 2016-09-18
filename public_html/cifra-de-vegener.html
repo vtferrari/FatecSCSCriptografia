@@ -83,14 +83,16 @@
                 <p>&copy; Company 2015</p>
             </footer>
         </div>
-        <script src="bower_components/jQuery/dist/jquery.min.js"></script>
+        <script src="js/vendor/jquery-1.11.2.js"></script>
+        <script src="js/romever-acentos.js"></script>
         <script src="js/vendor/bootstrap.min.js"></script>
         <script src="js/main.js"></script>
         <script type="text/javascript" >
             var mensagem = "";
             var chave = "";
             $("#mensagem").on("keyup", function () {
-                $("#mensagem").val($("#mensagem").val().toUpperCase());
+                $("#mensagem").val($("#mensagem").val().replace(new RegExp(/ /, 'g'),""));
+                $("#mensagem").val(removerAcentos($("#mensagem").val().toLowerCase()).toUpperCase());
                 mensagem = $("#mensagem").val().toUpperCase();
             });
             $("#chave").on("keyup", function () {
