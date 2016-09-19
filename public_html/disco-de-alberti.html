@@ -15,7 +15,6 @@
                 padding-bottom: 20px;
             }
         </style>
-        <link rel="stylesheet" href="css/bootstrap-theme.min.css">
         <link rel="stylesheet" href="css/main.css">
 
         <script src="js/vendor/modernizr-2.8.3-respond-1.4.2.min.js"></script>
@@ -37,7 +36,9 @@
                 </div>
             </div>
         </nav>
-
+        <header class="disco-alberti">
+            <div class="titulo"><h1>O disco de Alberti</h1></div>
+        </header>
         <div class="container">
             <div class="row">
                 <div class="col-sm-12">
@@ -71,7 +72,7 @@
             var mensagem = "";
             var chave = 3;
             $("#mensagem").on("keyup", function () {
-                $("#mensagem").val($("#mensagem").val().replace(new RegExp(/ /, 'g'),""));
+                $("#mensagem").val($("#mensagem").val().replace(new RegExp(/ /, 'g'), ""));
                 $("#mensagem").val(removerAcentos($("#mensagem").val().toLowerCase()).toUpperCase());
                 mensagem = $("#mensagem").val().toUpperCase();
             });
@@ -101,7 +102,7 @@
             }
             function descriptografiaDiscoDeAlberti(mensagem, chave) {
                 var cifra = "";
-                var tabela =   ['c', '#', 'b', 'm', 'd', 'g', 'p', 'f', 'z', 'n', 'x', 'y', 'v', 't', 'o', 's', 'k', 'e', 'r', 'l', 'h', 'a', 'i', 'q'];
+                var tabela = ['c', '#', 'b', 'm', 'd', 'g', 'p', 'f', 'z', 'n', 'x', 'y', 'v', 't', 'o', 's', 'k', 'e', 'r', 'l', 'h', 'a', 'i', 'q'];
                 var alfabeto = ['a', 'b', 'c', 'd', 'e', 'f', 'g', 'i', 'l', 'm', 'n', 'o', 'p', 'q', 'r', 's', 't', 'v', 'x', 'z', '1', '2', '3', '4'];
                 for (var i = 0; i < mensagem.length; i++) {
                     for (var j = 0; j < tabela.length; j++) {

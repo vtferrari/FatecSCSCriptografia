@@ -1,5 +1,8 @@
-<!DOCTYPE html>
-<html>
+<!doctype html>
+<!--[if lt IE 7]>      <html class="no-js lt-ie9 lt-ie8 lt-ie7" lang=""> <![endif]-->
+<!--[if IE 7]>         <html class="no-js lt-ie9 lt-ie8" lang=""> <![endif]-->
+<!--[if IE 8]>         <html class="no-js lt-ie9" lang=""> <![endif]-->
+<!--[if gt IE 8]><!--> <html class="no-js" lang=""> <!--<![endif]-->
     <head>
         <meta charset="utf-8">
         <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
@@ -56,71 +59,52 @@
             </div>
         </nav>
 
-        <header class="imperio-romano">
-            <div class="titulo"><h1>Imperio Romano</h1></div>
+        <header class="index">
+            <div class="titulo"><h1>Sistemas monoalfabéticos</h1></div>
         </header>
 
         <div class="container">
+            <!-- Example row of columns -->
+
+
             <div class="row">
-                <div class="form-group col-sm-9">
-                    <label>Mensagem</label>
-                    <input type="text" id="mensagem" class="form-control" />
-                </div>
-                <div class="form-group col-sm-3">
-                    <label>Chave</label>
-                    <input type="number" value="3"  id="chave" class="form-control" />
-                </div>
-                <div class="form-group col-sm-12">
-                    <label>Mensagem Cifrada/Decifrada</label>
-                    <input type="text" id="cifra" class="form-control" disabled/>
-                </div>
-                <div class="form-group col-sm-12">
-                    <button type="submit" id="cripto" class="btn btn-success">Criptografar</button>
-                    <button type="submit" id="decripto" class="btn btn-danger">Decriptografar</button>
+                <div class="col-md-12">
+                    <div class="col-md-6">
+                        <h2>Escrituras Sagradas</h2>
+                        <div class="thumb">
+                            <div class="esconde">
+                                <img src="img/bíblia.jpg" alt="" style="width: 531px;"/>
+                            </div>
+                        </div>
+                        <p>Cifra de Atbash. </p>
+                        <p>Cifra de Albam. </p>
+                        <p>Cifra de atbah. </p>
+                        <p><a class="btn btn-default" href="escrituras-sagradas.html" role="button">Escrituras Sabradas &raquo;</a></p>
+                    </div>
+                    <div class="col-md-6">
+                        <h2>Imperio Romano</h2>
+                        <div class="thumb">
+                            <div class="esconde">
+                                <img src="img/roma.jpg" alt="" style="width: 531px;"/>
+                            </div>
+                        </div>
+                        <p>Teste. </p>
+                        <p><a class="btn btn-default" href="cifra-de-cesar.html" role="button">Cifra de Cesar &raquo;</a></p>
+                    </div>
                 </div>
             </div>
+
             <hr>
 
             <footer>
                 <p>&copy; Company 2015</p>
             </footer>
-        </div>
-        <script src="js/vendor/jquery-1.11.2.js"></script>
-        <script src="js/romever-acentos.js"></script>
-        <script src="js/vendor/bootstrap.min.js"></script>
-        <script src="js/main.js"></script>
-        <script type="text/javascript" >
-            var mensagem = "";
-            var chave = 3;
-            $("#mensagem").on("keyup", function () {
-                $("#mensagem").val($("#mensagem").val().replace(new RegExp(/ /, 'g'),""));
-                $("#mensagem").val(removerAcentos($("#mensagem").val().toLowerCase()).toUpperCase());
-                mensagem = $("#mensagem").val().toUpperCase();
-            });
-            $("#chave").on("keyup", function () {
-                chave = parseInt($("#chave").val());
-            });
-            $("#cripto").on("click", function () {
-                $("#cifra").val(cifraDeCesar(mensagem, chave));
-            });
-            $("#decripto").on("click", function () {
-                $("#cifra").val(cifraDeCesar(mensagem, chave * -1));
-            });
+        </div> <!-- /container -->        <script src="//ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.js"></script>
+        <script>window.jQuery || document.write('<script src="js/vendor/jquery-1.11.2.js"><\/script>')</script>
 
-            function cifraDeCesar(mensagem, chave) {
-                var cifra = "";
-                for (i = 0; i < mensagem.length; i++) {
-                    var letra = mensagem.charCodeAt(i) + chave;
-                    if (letra > 90) {
-                        letra -= 26;
-                    } else if (letra < 65) {
-                        letra += 26;
-                    }
-                    cifra += String.fromCharCode(letra);
-                }
-                return cifra;
-            }
-        </script>
+        <script src="js/vendor/bootstrap.min.js"></script>
+
+        <script src="js/main.js"></script>
 
     </body>
 </html>

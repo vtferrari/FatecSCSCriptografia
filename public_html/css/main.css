@@ -10,10 +10,11 @@ header {
     height: 330px;
     margin-bottom: 10px;
 }
-
+header.index{
+    background-image: url("../img/cripto.png");
+}
 header.escrituras-sagradas{
     background-image: url("../img/bíblia.jpg");
-
 }
 header.imperio-romano{
     background-image: url("../img/roma.jpg");
@@ -23,7 +24,14 @@ header.cifra-vigenere{
     background-image: url("../img/vigenere.jpg");
     background-size: auto 1400px;
 }
-
+header.disco-alberti{
+    background-image: url("../img/alberti.jpg");
+    background-size: auto 1400px;
+}
+header.bastao-licurgo{
+    background-image: url("../img/licurgo.jpg");
+    background-size: auto 1400px;
+}
 header .titulo{
     height: 330px;
 }
@@ -35,6 +43,22 @@ header .titulo h1{
     font-size: 80px;
     text-shadow: 2px 2px 2px #000;
     margin: 0;
+}
+.esconde{
+    width: 531px;
+    height: 262px;
+    overflow: hidden;
+}
+.thumb{
+    width: 541px;
+    height: 272px;
+    overflow: hidden;
+    display: inline-block;
+    padding: 4px;
+    line-height: 1.42857143;
+    background-color: #fff;
+    border: 1px solid #ddd;
+    border-radius: 4px;
 }
 
 
